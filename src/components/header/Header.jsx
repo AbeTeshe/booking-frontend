@@ -1,5 +1,5 @@
 
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import HotelIcon from '@mui/icons-material/Hotel';
 import LocalHotelIcon from '@mui/icons-material/LocalHotel';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
@@ -9,12 +9,12 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonIcon from '@mui/icons-material/Person';
 import { DateRange } from 'react-date-range';
 import {format} from "date-fns";
+import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
 import "./header.css";
-import { useContext } from 'react';
 import { SearchContext } from '../../context/SearchContext';
 
 const Header = ({type}) => {
@@ -34,6 +34,8 @@ const Header = ({type}) => {
     children: 0,
     room: 1
   });
+
+  const { user} = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -78,7 +80,7 @@ const Header = ({type}) => {
             </div>
             { type !=="list" && <><h1 className="headerTitle">A lifetiem of discounts? It's Genius.</h1>
             <p className="headerDesc">Get rewarded for your travels - unlock instant savings of 10% or more with a free lamabooking account </p>
-            <button className="headerBtn">Sign in / Register</button>
+           {!user &&  <button className="headerBtn">Sign in / Register</button>}
             <div className="headerSearch">
                 <div className="headerSearchItem">
                     <HotelIcon className="headerIcon" />
